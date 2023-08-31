@@ -45,7 +45,7 @@ public class RegistrationServlet extends HttpServlet implements Serializable {
             conn.close();
 
             // Redirect to the success page
-            response.sendRedirect("wedding.html");
+            response.sendRedirect(events+ ".html");
         } catch (Exception e) {
             e.printStackTrace();
             // Handle the exception and redirect to an error page if needed

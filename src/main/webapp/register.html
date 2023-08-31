@@ -6,26 +6,25 @@
     <title>Event Registration</title>
 <style>
  body {
-    color:aquamarine;
-    background-image: url("https://i.makeagif.com/media/6-16-2018/j8SSfR.gif");
+    background-image: url("https://i.pinimg.com/736x/56/26/da/5626da0e582372e85f1dc39edd7da1e8.jpg");
     background-size:cover;
     background-repeat: no-repeat;
-    width:412px 914px;
+    /*width:412px 914px;*/
   }
 .container {
-  /*width:100% 100%;
+  width:412px;
   margin: 0 auto;
-  padding: 20px;*/
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 h1 {
   text-align: center;
-  color:azure;
+  color: deeppink;
   font-size:xx-large;
 }
 label {
-  color:rgb(246, 6, 218);
+  color: crimson;
   font-weight: bold;
   font-size:larger;
   margin-bottom: 10px;
@@ -52,6 +51,10 @@ padding:5px;
   width: 200px; /* Set an initial width for the address field */
   resize: horizontal; /* Allow vertical resizing */
 }
+.error{
+	font-size:18px;
+	color:darkgreen;
+}
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -70,9 +73,9 @@ select{
     <div class="container">
         <form action="RegistrationServlet" method="post" id="registrationForm" >
             <label for="eventName">Select Event Type:</label><br>
-            <input type="radio" id="wedding" name="event" value="weddingpage">
+            <input type="radio" id="wedding" name="event" value="wedding">
             <label for="wedding">Wedding</label><br>
-            <input type="radio" id="birthday" name="event" value="Birthday">
+            <input type="radio" id="birthday" name="event" value="birthday">
             <label for="birthday">Birthday</label><br>
             <input type="radio" id="corporate" name="event" value="corporate">
             <label for="corporate">Corporate</label><br><br>
