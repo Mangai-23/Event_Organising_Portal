@@ -1,0 +1,448 @@
++<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Decorations</title>
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #353b48;
+}
+.container {
+  background-color: #fff;
+  width: 95%;
+  margin: 0 auto;
+  min-height: 1000px;
+  display: flex;
+}
+
+.sidebar {
+  flex: 1;
+  background-color: #f5f6fa;
+  padding: 10px;
+}
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #e74c3c;
+  margin-bottom: 10px;
+}
+.sidebar input[type="text"] {
+  padding: 5px 5px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.sidebar h3 {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.sidebar ul {
+  list-style: none;
+}
+.sidebar ul li {
+  margin: 5px 0;
+  padding-left: 5px;
+  cursor: pointer;
+}
+.sidebar ul li:hover {
+  background-color: #dcdde1;
+}
+.content {
+  flex: 4;
+}
+.products {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+}
+.product {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+}
+
+.product .img {
+  flex: 1;
+}
+.product .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: 0.5s;
+  transform: scale(0.75);
+}
+.product:hover img {
+  transform: scale(1);
+}
+.product .product-details {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.product-details span:nth-child(1) {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.product-details span:nth-child(2) {
+  color: #2980b9;
+  font-weight: 600;
+}
+
+.product-details span:nth-child(3) {
+  font-size: 11px;
+  font-weight: 600;
+  color: #16a085;
+}
+.select-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.select-button:hover {
+  background-color: #2980b9;
+}
+.selected-decorations {
+  order: -1; /* Move the selected decorations section to the top */
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  text-align: left;
+  margin-bottom: 20px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#selectedDecorationsButtons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+#clearBtn,
+#saveDecorationsBtn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#clearBtn:hover,
+#saveDecorationsBtn:hover {
+  background-color: #2980b9;
+}
+
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="logo">Designs</div>
+        <input type="text" id="txtSearch" placeholder="Search Desgins..." />
+        <h3>Category</h3>
+        <ul class="category-list">
+
+        </ul>
+        <h3>Price Range</h3>
+        <div class="price">
+          <input type="range" id="priceRange" />
+          <span class="priceValue">500</span>
+        </div>
+      </div>
+      <div class="content">
+        <div class="products"></div>
+	        <div class="selected-decorations">
+      <h2>Selected Decoration</h2>
+      <div id="selectedDecorationName"></div>
+      <div id="selectedDecorationsButtons">
+        <button id="clearBtn">Clear</button>
+        <button id="saveDecorationsBtn">Save Decorations</button>
+      </div>
+    </div>
+      </div>
+    </div>
+    <script>
+const data = [
+  {
+    id: 1,
+    name: "Combo of Pink & White",
+    img: "https://www.oyorooms.com/blog/wp-content/uploads/2018/07/shutterstock_648748324.jpg",
+    amt: 1599,
+    description: "Pink and White Floral Decor & Greeny Artificial Plants",
+    catagory: "Creative",
+  },
+
+  {
+    id: 2,
+    name: "Baby Pink & Red Arch",
+    img: "https://cdn0.weddingwire.in/vendor/7196/3_2/960/jpeg/299fd1be-ed4a-40c5-95bc-f2b501908c11_15_77196-161649155670206.jpeg",
+    amt: 1300,
+    description: "Semi-circled Arch Floral Decorations",
+    catagory: "Floral",
+  },
+
+  {
+    id: 3,
+    name: "Purple Vintage Look Over",
+    img: "https://cdn0.weddingwire.in/vendor/5669/3_2/960/jpg/purple-jaggery-weddings-10_15_235669-1564483397.jpeg",
+    amt: 2799,
+    description: "Purple Tunnel Garden Entry View",
+    catagory: "Vintage",
+  },
+  {
+    id: 4,
+    name: "White Vintage & Floral",
+    img: "https://m.media-amazon.com/images/I/711k5I06QmL.jpg",
+    amt: 9270,
+    description: "",
+    catagory: "Vintage",
+  },
+  {
+    id: 5,
+    name: "Honor PAD X8",
+    img: "https://shaadiyari.com/images/BlogImage/7262629Image_2.jpg",
+    amt: 12999,
+    description: "Honor india",
+    catagory: "Royal",
+  },
+
+  {
+    id: 6,
+    name: "IKALL N9 ",
+    img: "https://www.happywedding.app/blog/wp-content/uploads/2023/03/Wedding-Stage-Decor.jpg",
+    amt: 3999,
+    description: "IKALL Store",
+    catagory: "Floral",
+  },
+
+  {
+    id: 7,
+    name: "Oppo Pad Air",
+    img: "https://5.imimg.com/data5/SELLER/Default/2022/1/JC/LU/HB/112791646/wedding-stage-backdrop-500x500.jpeg",
+    amt: 15999,
+    description: "Oppo Store",
+    catagory: "Simple",
+  },
+  {
+    id: 8,
+    name: "Acer EK220Q",
+    img: "https://i0.wp.com/decorsutrablog.com/wp-content/uploads/2022/07/designbyraja_decorsutra.jpg?w=1080&ssl=1",
+    amt: 6249,
+    description: "Accer Store",
+    catagory: "Floral",
+  },
+  {
+    id: 9,
+    name: "Samsung 24",
+    img: "https://images-cdn.ubuy.co.in/635018454ebe08774c380084-wedding-stage-decorations-backdrop-party.jpg",
+    amt: 9799,
+    description: "Samsung Store",
+    catagory: "Simple",
+  },
+
+  {
+    id: 10,
+    name: "ZEBRONICS AC32FHD ",
+    img: "https://weddingbanquets.in/blog/wp-content/uploads/2022/09/The-Royal-Backdrop-by-Pinterest-1.jpg ",
+    amt: 12799,
+    description: "ZEBRONICS Store",
+    catagory: "Royal",
+  },
+  {
+    id: 11,
+    name: "ZEBRONICS AC32",
+    img: "https://media.weddingz.in/images/39eba43cac42d75c0774490371fbdbfd/Wedding-Reception-Stage-Decoration-Ideas3.jpg",
+    amt: 12799,
+    description: "ZEBRONICS Store",
+    catagory: "Creative",
+  },
+  {
+    id: 12,
+    name: "ZEBRONICS AC",
+    img: "https://www.shaadidukaan.com/vogue/wp-content/uploads/2020/03/engagement-stage-decor.jpg",
+    amt: 12799,
+    description: "ZEBRONICS Store",
+    catagory: "Creative",
+  },
+  
+];
+
+const productsContainer = document.querySelector(".products");
+const categoryList = document.querySelector(".category-list");
+
+function displaySelectedImage(imageUrl) {
+  const selectedImageHTML = `
+    <div class="selected-image">
+      <img src="${imageUrl}" alt="Selected Design" />
+    </div>`;
+  productsContainer.innerHTML = selectedImageHTML;
+}
+function displayProducts(products) {
+  if (products.length > 0) {
+    const product_details = products
+      .map(
+        (product) => `
+  <div class="product">
+  <div class="img">
+    <img src="${product.img}" alt="${product.name}" />
+  </div>
+  <div class="product-details">
+    <span class="name">${product.name}</span>
+    <span class="amt">${product.amt}</span>
+    <span class="description">${product.description}</span>
+    <button class="select-button" data-product-id="${product.id}">Select</button>
+  </div>
+</div>`
+      )
+      .join("");
+
+    productsContainer.innerHTML = product_details;
+    const selectButtons = document.querySelectorAll(".select-button");
+    selectButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        // You can access the selected product's ID using data-product-id attribute
+        const productId = e.target.getAttribute("data-product-id");
+        //const productname=e.target.getAttribute("data-product-name");
+        // You can do something with the selected product ID here
+        const selectedProduct = data.find((product) => product.id === parseInt(productId));
+        //const selectedProduct1 = data.find((product) => product.name === parseInt(productname));
+        displaySelectedImage(selectedProduct.img);
+        //displaySelectedImage(selectedProduct1.name);
+  
+        //console.log(`Product ID ${productId} selected`);
+      });
+    });
+  } else {
+    productsContainer.innerHTML = "<h3>No Products Available</h3>";
+  }
+  
+}
+function setCategories() {
+  const allCategories = data.map((product) => product.catagory);
+  //console.log(allCategories);
+  const catagories = [
+    "All",
+    ...allCategories.filter((product, index) => {
+      return allCategories.indexOf(product) === index;
+    }),
+  ];
+  //console.log(catagories);
+  categoryList.innerHTML = catagories.map((catagory) => `<li>${catagory}</li>`).join("");
+
+  categoryList.addEventListener("click", (e) => {
+    const selectedCatagory = e.target.textContent;
+    selectedCatagory === "All" ? displayProducts(data) : displayProducts(data.filter((product) => product.catagory == selectedCatagory));
+  });
+}
+const priceRange = document.querySelector("#priceRange");
+const priceValue = document.querySelector(".priceValue");
+
+function setPrices() {
+  const priceList = data.map((product) => product.amt);
+  const minPrice = Math.min(...priceList);
+  const maxPrice = Math.max(...priceList);
+  priceRange.min = minPrice;
+  priceRange.max = maxPrice;
+  priceValue.textContent = "Rs." + maxPrice;
+
+  priceRange.addEventListener("input", (e) => {
+    priceValue.textContent = e.target.value;
+    displayProducts(data.filter((product) => product.amt <= e.target.value));
+  });
+}
+
+const txtSearch = document.querySelector("#txtSearch");
+txtSearch.addEventListener("keyup", (e) => {
+  const value = e.target.value.toLowerCase().trim();
+  if (value) {
+    displayProducts(data.filter((product) => product.name.toLowerCase().indexOf(value) !== -1));
+  } else {
+    displayProducts(data);
+  }
+});
+displayProducts(data);
+setCategories();
+setPrices();
+
+   
+
+const selectedDecorationName = document.getElementById("selectedDecorationName");
+      const saveDecorationsBtn = document.getElementById("saveDecorationsBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      let selectedDecoration = null;
+      let selectedDecorationPrice = null;
+
+       const decorationItems = document.querySelectorAll(".product");
+        decorationItems.forEach(decorationItem => {
+            decorationItem.addEventListener("click", () => {
+                const decorationName = decorationItem.querySelector(".name").textContent;
+                selectedDecoration = decorationName;
+				localStorage.setItem("selectedDecoration",selectedDecoration);
+                // Add this block to also get the selected decoration's price
+                const decorationPrice = decorationItem.querySelector(".amt").textContent;
+                selectedDecorationPrice = decorationPrice;
+				localStorage.setItem("selectedDecorationPrice",selectedDecorationPrice);
+                displaySelectedDecoration(selectedDecoration, selectedDecorationPrice); // Update this line
+            });
+        });
+saveDecorationsBtn.addEventListener("click", () => {
+  if (selectedDecoration) {
+    localStorage.setItem("selectedDecoration", selectedDecoration);
+    localStorage.setItem("selectedDecorationPrice", selectedDecorationPrice);
+    window.location.href = "billdemo.html";  // Redirect to the billdemo page
+  } else {
+    alert("Please select a decoration first.");
+  }
+});
+
+// Clear selected decoration and redirect to decor.html page
+clearBtn.addEventListener("click", () => {
+  selectedDecoration = null;
+  localStorage.removeItem("selectedDecoration");
+  localStorage.removeItem("selectedDecorationPrice");
+  displaySelectedDecoration(selectedDecoration, selectedDecorationPrice);
+  window.location.href = "decor.html"; // Redirect to the decor.html page
+})
+
+// Display the selected decoration
+function displaySelectedDecoration(decorationName, decorationPrice) {
+  selectedDecorationName.textContent = decorationName
+    ? `Selected: ${decorationName}`
+    : "No decoration selected";
+  selectedDecorationPrice.textContent = decorationPrice
+    ? `Selected Price:${decorationPrice}`
+    : "Not Selected";
+}
+
+// Initialize by displaying the initially selected decoration if any
+displaySelectedDecoration(selectedDecoration, selectedDecorationPrice);
+</script>
+
+  </body>
+</html>

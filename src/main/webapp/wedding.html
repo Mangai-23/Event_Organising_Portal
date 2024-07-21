@@ -13,15 +13,17 @@
 		header {
 			background-color: #f9f9f9;
 			text-align: center;
+			padding-top: 0;
 		}
 
 		h1 {
-			background-image: url("header.png");
+			/*background-image: url("header.png");
 			background-position: center;
-			background-repeat: repeat;
+			background-repeat: repeat;*/
+			background-color: #cce9e4;
 			padding: 25px;
-			color: #fff;
-			margin: center;
+			color: #333;
+			text-align: center;
 		}
 
 		.services {
@@ -54,7 +56,10 @@
 			line-height: 11px;
 			color: black;
 		}
-
+		h1::after {
+		  content:""; 
+		  transform: rotate(180deg);
+		}
 		.service p {
 			color: #777;
 			/*font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
@@ -89,24 +94,25 @@
 			text-transform: uppercase;
 		}
 	</style>
-</head>
+</head>+
 
 <body>
 	<div class="header">
 		<header>
-			<h1>Wedding Planner Services</h1>
+			<div class="heading"></div>
+			<h1>&#x2765 Wedding Planner Services &#x2765</h1>
 		</header>
 		<nav>
 			<ul>
-				<li><a href="file:///E:/IWT%20LAB/homepage.html">Home</a></li>
+				<li><a href="homepage.html">Home</a></li>
 			</ul>
 		</nav>
 	</div>
 	<div class="services">
 		<div class="service">
-			<img src="venue.jpg" alt="Venue">
+			<img src="https://imgmedia.lbb.in/media/2019/04/5ca1cedf8722f4176f30d878_1554108127903.jpg" alt="Venue">
 			<div class="service-content">
-				<h2>Venue Selection</h2>
+				<h2><a href="venue.html" style="color:black;text-decoration: none">Venue Selection</a></h2>
 				<p>Choose from a selection of beautiful venues to host your dream wedding.Our experienced wedding
 					planners will assist you in finding the perfect location that matches your vision and requirements.
 				</p>
@@ -114,10 +120,10 @@
 		</div>
 
 		<div class="service">
-			<img src="decorations.jpeg" alt="Decoration">
+			<img src="https://i0.wp.com/decorsutrablog.com/wp-content/uploads/2021/01/Decorsutra_Lotus-Theme_20.jpg?resize=1080%2C1200&ssl=1" alt="Decoration">
 			<div class="service-content">
 				<h2>
-					<span><a href="#" style="color:black;text-decoration: none">Decorations</a></span>
+					<span><a href="decor.html" style="color:black;text-decoration: none">Decorations</a></span>
 				</h2>
 				<p>Create a stunning ambiance with our exquisite decorations.Our talented team will work closely with
 					you to design and implement captivating decor elements, transforming your wedding venue into a
@@ -126,7 +132,7 @@
 		</div>
 
 		<div class="service">
-			<img src="foodwed.jpg" alt="Catering">
+			<img src="https://3.imimg.com/data3/RQ/LB/MY-10296472/wedding-catering-services.jpg " alt="Catering">
 			<div class="service-content">
 				<h2>Catering</h2>
 				<p>Delight your guests with a delectable culinary experience.Our skilled chefs and catering staff will

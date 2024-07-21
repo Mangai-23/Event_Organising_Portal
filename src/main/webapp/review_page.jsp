@@ -4,7 +4,37 @@
 <html>
 <head>
     <title>Event Reviews</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+    body {
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+		background-color: pink;
+	}
+	
+	h1,
+	h2 {
+		text-align: center;
+	}
+	
+	.reviews {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+	
+	.review {
+		border: 1px solid #ddd;
+		padding: 10px;
+		margin: 10px 0;
+	}
+	
+	.review-form {
+		max-width: 800px;
+		margin: 20px auto;
+		padding: 20px;
+		border: 1px solid #ddd;
+	}
+   </style>
 </head>
 <body>
     <h1>Event Reviews</h1>
@@ -29,10 +59,20 @@
                     
         %>
                     <div class="review">
-                        <h3><%= username %></h3>
-                        <p><%= userrating %>
-                        <p><%= userReview %></p>
-                    </div>
+                    <div class="name" style="display:flex;">
+					    <h4>Name:</h4>
+					    <h4><%= username %></h4>
+					</div>
+					<h4>Rating:</h4>
+					    <div class="star-rating">
+					        <%-- Use a loop to display the stars based on the rating --%>
+					        <% for (int i = 1; i <= userrating; i++) { %>
+					            <span class="star">&#9733;</span>
+					        <% } %>
+					    </div>
+					    <h4>Feedback</h4>
+					    <p><%= userReview %></p>
+					</div>
         <%
                 }
                 

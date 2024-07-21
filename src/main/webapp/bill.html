@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dynamic Invoice Generator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/bill.css" />
+  </head>
+  <body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <div class="title-date">
+                <h2 class="title">BILL</h2>
+                <input type="text" placeholder="29/09/2023" class="date">
+            </div>
+            <div class="space"></div>
+            <p class="invoice-number">#08 279</p>
+        </div>
+        <div class="invoice-body">
+            <table>
+                <thead>
+                    <th style="padding-left:12px;">PRODUCT</th>
+                    <!--<th>PRICE</th>-->
+                    <th>AMOUNT</th>
+                    <th style="text-align: right;">ACTION</th>
+                </thead>
+  
+                <!--<tbody id="table-body">
+                <tr class="single-row">
+                    <div class="venueDetails" id="venueDetails"></div>
+
+                    <td style="text-align: right;"><span class="material-icons">delete_outline</span></td>
+                </tr>
+                <tr>
+                    <div id="decorationDetails">
+                        <td style="text-align: right;"><span class="material-icons">delete_outline</span></td>
+                    </div>
+                </tr>
+                <tr style="padding-left: 20px">
+                    <td class="dashed "><div class="float">
+                        <a href="#" class="float" id="add-row">
+                            <span class="material-icons plus">add</span>
+                        </a>
+                    </div>
+                </td>
+                    <td class="dashed"></td>
+                    <td class="dashed"></td>
+                    <td class="dashed"></td>
+                    <td class="dashed"></td>
+                </tr>
+            </tbody>-->
+            <tbody id="table-body">
+                <tr class="single-row" id="venueRow">
+                    <td><p>Venue Name:</p></td>
+                    <td id="venueDetails"><p></p></td>
+                    <td style="text-align: right;"><span class="material-icons">delete_outline</span></td>
+                </tr>
+                <tr class="single-row" id="decorationRow">
+                    <td><p>Decoration Name:</p></td>
+                    <td id="decorationDetails"><p></p></td>
+                    <td style="text-align: right;"><span class="material-icons">delete_outline</span></td>
+                </tr>
+            </tbody>
+            
+            </table>
+            <div id="sum"><input type="text" placeholder="0.00" name="total" class="total" id="total" disabled></div>
+  
+        </div>
+    </div>
+      <script>
+		  const tBody = document.getElementById("table-body");
+
+const selectedVenueName = localStorage.getItem("selectedVenueName");
+const selectedVenueCost = localStorage.getItem("selectedVenueCost");
+const selectedDecoration = localStorage.getItem("selectedDecoration");
+const selectedDecorationPrice = localStorage.getItem("selectedDecorationPrice");
+
+// Populate venue details
+document.getElementById("venueDetails").textContent = `${selectedVenueName}`;
+document.getElementById("venueDetails").textContent = `${selectedVenueCost}`;
+
+// Populate decoration details
+document.getElementById("decorationDetails").textContent = `${selectedDecorationPrice}`;
+
+// Now you have separate rows for venue and decoration with their respective details.
+
+//Get the overall sum/Total
+overallSum =()=> {
+    var arr = document.getElementsByName("amount");
+    var total = 0;
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].value) {
+            total += +arr[i].value;
+        }
+        document.getElementById("total").value = total;
+    }
+}
+
+//Delete row from the table
+tBody.addEventListener("click", (e)=>{
+    let el = e.target;
+    const deleteROW = e.target.getAttribute("action");
+    if(deleteROW == "delete") {
+        delRow(el);
+        overallSum();
+    }
+})
+
+//Target row and remove from DOM;
+delRow =(el)=> {
+    el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
+}
+	  </script>
+    </body>
+  </html>

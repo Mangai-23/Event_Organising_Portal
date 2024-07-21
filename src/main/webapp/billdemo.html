@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bill Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #totalCost {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bill</h1>
+    <table class="venue">
+        <caption><h2>Venue Details</h2></caption>
+        <tr>
+            <th>Item</th>
+            <th>Cost</th>
+        </tr>
+        <tr>
+            <td>Venue Name</td>
+            <td id="venueName"></td>
+        </tr>
+        <tr>
+            <td>Venue Cost</td>
+            <td id="venueCost"></td>
+        </tr>
+        <tr>
+            <td>Venue Address</td>
+            <td id="venueAddress"></td>
+        </tr>
+    </table>
+
+    <table>
+        <caption><h2>Decoration Details</h2></caption>
+        <tr>
+            <th>Item</th>
+            <th>Cost</th>
+        </tr>
+        <tr>
+            <td>Decoration Name</td>
+            <td id="decorationName"></td>
+        </tr>
+        <tr>
+            <td>Decoration Cost</td>
+            <td id="decorationCost"></td>
+        </tr>
+    </table>
+
+    <div id="totalCost">
+        Total Cost: Rs. <span id="totalCostValue"></span>
+    </div>
+
+    <script>
+        // Retrieve venue details from local storage (assuming they were saved on the venue page)
+        const selectedVenueName = localStorage.getItem("selectedVenueName");
+        const selectedVenueCost = localStorage.getItem("selectedVenueCost");
+        const selectedVenueAddress = localStorage.getItem("selectedVenueAddress");
+
+        // Retrieve decoration details from local storage (assuming they were saved on the decoration page)
+        const selectedDecoration = localStorage.getItem("selectedDecoration");
+        const selectedDecorationPrice = localStorage.getItem("selectedDecorationPrice");
+
+        const venueCost = parseFloat(selectedVenueCost) || 0;
+        const decorationCost = parseFloat(selectedDecorationPrice) || 0;
+        const totalCost = venueCost + decorationCost;
+
+        // Display venue details
+        document.getElementById("venueName").textContent = selectedVenueName;
+        document.getElementById("venueCost").textContent = `Rs. ${selectedVenueCost}`;
+        document.getElementById("venueAddress").textContent = selectedVenueAddress;
+
+        // Display decoration details
+        document.getElementById("decorationName").textContent = selectedDecoration;
+        document.getElementById("decorationCost").textContent = `Rs. ${selectedDecorationPrice}`;
+
+        // Display total cost
+        document.getElementById("totalCostValue").textContent = totalCost;
+    </script>
+</body>
+</html>

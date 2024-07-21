@@ -5,6 +5,30 @@
     <title>Submit a Review</title>
     <link rel="stylesheet" type="text/css" href="css/Style1.css">
     <style>
+    body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+a {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #0056b3;
+}
         /* Add custom CSS for the star rating */
         .star-rating {
             display: inline-block;

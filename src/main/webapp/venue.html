@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.location-input {
+  margin-bottom: 20px;
+}
+
+.venue-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.venue-card {
+  width: calc(25% - 20px); /* Four cards in a row with some spacing */
+  margin: 0 0 20px 0; 
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.selected-venue {
+  order: -1; /* Move the selected venue section to the top */
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  text-align: left;
+  margin-bottom: 20px;
+  width:50%;
+}
+
+.selected-venue img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.venue-card img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.venue-card img:hover {
+  transform: scale(1.1);
+}
+.price-range-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.price-range-input label {
+  margin-right: 10px;
+}
+.separator {
+  height: 1px;
+  background-color: white;
+  margin: 10px 0; /* Adjust the margin to control the spacing */
+}
+</style>
+<title>Venue Selection</title>
+</head>
+<body>
+<div class="container">
+  <h1>Venue Selection</h1>
+  <div class="location-input">
+    <label for="location">Enter your location:</label>
+    <select id="location">
+      <option value="select">Select your location</option>
+      <option value="Tirunelveli">Tirunelveli</option>
+      <option value="Nagercoil">Nagercoil</option>
+      <option value="Kovilpatti">Kovilpatti</option>
+      <option value="Thoothukudi">Thoothukudi</option>
+      <option value="Madurai">Madurai</option>
+      <!-- Add more location options as needed -->
+    </select>
+   <label for="minPrice">Min Price:</label>
+      <input type="number" id="minPrice" placeholder="Min Price">
+      <label for="maxPrice">Max Price:</label>
+      <input type="number" id="maxPrice" placeholder="Max Price"><br>
+
+    <button id="searchBtn">Search</button>
+  </div>
+  <div class="venue-list" id="venueList"></div>
+  <div class="selected-venue" id="selectedVenue">
+    <h2>Selected Venue</h2>
+    <div class="selected-venue-details">
+      <img id="selectedVenueImage" src="" alt="">
+      <p id="selectedVenueName"></p>
+      <p id="selectedVenueCost"></p>
+	<p id="selectedVenueaddress"></p>
+<p id="selectedVenueDetails"></p>
+
+<div class="selected-venue" id="selectedVenue">
+   <button id="clearBtn">Clear</button>
+   <button id="saveVenueBtn">Save Venue</button>
+</div>
+    </div>
+  </div>
+</div>
+<script>
+const venueList = document.getElementById("venueList");
+const selectedVenueImage = document.getElementById("selectedVenueImage");
+const selectedVenueName = document.getElementById("selectedVenueName");
+const selectedVenueCost = document.getElementById("selectedVenueCost");
+const selectedVenueAddress = document.getElementById("selectedVenueaddress");
+const selectedVenueDetails = document.getElementById("selectedVenueDetails");
+const clearBtn = document.getElementById('clearBtn');
+const searchBtn = document.getElementById("searchBtn");
+
+const venues = [
+  { 
+    name: "Lakshmi Mall", 
+    location: "Tirunelveli", 
+    cost: 30000, 
+    image: "https://yellowpages.webindia123.com/database/Tirunelveli/images/2549/1_Main.jpg",
+    Address: "No 28 C, Near Aruzhmighu Nellaiappar Temple, Old Lakshmi Theatre, South Mount Road, Tirunelveli, Tamil Nadu - 627006"
+  },
+  { 
+    name: "Mani Mahal",
+    location: "Tirunelveli", 
+    cost: 25000, 
+    image: "https://content3.jdmagicbox.com/comp/tirunelveli/p6/0462px462.x462.171231212837.v2p6/catalogue/mani-mahal-palayamkottai-tirunelveli-banquet-halls-99oeohn3dl.jpg",
+    Address: "Santhi Nagar, Palayamkottai, Tirunelveli - 627002"
+  },
+  { 
+    name: "NSK Mahal", 
+    location: "Tirunelveli", 
+    cost: 50000, 
+    image: "https://lh3.googleusercontent.com/p/AF1QipM30Anb3LLk8TRHxsud4zcXu4I5Pmhouj-5LJuq=w960-h960-n-o-v1",
+    Address: "Thai Nagar Reddiarpatti Road Melapalayam Tirunelveli, Tamil Nadu 627005 India"
+  },
+ 
+  { 
+    name: "Maharasi Mahal  ", 
+    location: "Tirunelveli", 
+    cost: 100000, 
+    image: "https://www.maharaasimahal.com/assets/img/project/car.jpg",
+    Address: " No 8, Tuticorin Main Road, Ktc Nagar, Tirunelveli - 627011 (Indra Nagar V M Chatram)"
+  },
+  
+  { 
+    name: "VMS Mahal",
+    location: "Tirunelveli", 
+    cost: 25000, 
+    image: "https://www.vmskalyanamandapam.com/wp-content/uploads/photo-gallery/gallery1/thumb/21.jpg",
+    Address: " VMS Kalyana Mandapam 28/55, III rd Main Road Maharaja Nagar Tirunelveli 627011,Tamilnadu, India"
+  },
+  { 
+    name: "Sri Subasree Mahal", 
+    location: "Tirunelveli", 
+    cost: 35000, 
+    image: "https://img.weddingbazaar.com/shaadisaga_production/photos/pictures/007/003/596/new_large/ss20230608-7089-kev53h.jpg?1686196900",
+    Address: "Selvananthini Nagar, opposite to SRR policy Colony, Ramayanpatti, Tamil Nadu 627058"
+  }, 
+  { 
+    name: "Ganga Grandeur", 
+    location: "Nagercoil", 
+    cost: 200000, 
+    image: "https://scontent.fixm4-2.fna.fbcdn.net/v/t39.30808-6/299481522_473404214792207_8086254885481468449_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=e3f864&_nc_ohc=EyucLMnQnMgAX9pjKny&_nc_ht=scontent.fixm4-2.fna&oh=00_AfAnXG164ojJilrv2VCO2z6q3sieW5Wc6G79OyWn2_uKhw&oe=64ECBB7F",
+    Address: " Therakalputhoor, Nagercoil, India, Tamil Nadu"
+  },
+  { 
+    name: "LANCE MARRIAGE HALL", 
+    location: "Nagercoil", 
+    cost: 75000, 
+    image: "https://r2imghtlak.mmtcdn.com/r2-mmt-htl-image/htl-imgs/201806151628424679-9cdec00cca1611e9b2b20242ac110002.jpg",
+    Address: "Therakalputhoor, Nagercoil, India, Tamil Nadu"
+  },
+  { 
+    name: "Y.R Mahal", 
+    location: "Nagercoil", 
+    cost: 30000, 
+    image: "https://img.weddingbazaar.com/shaadisaga_production/photos/pictures/007/035/648/new_large/ss20230611-30753-1dfhj7z.jpg?1686477692",
+    Address: "Water Tank Rd, near water tank, Nagercoil, Tamil Nadu 629001"
+  }
+  
+];
+
+searchBtn.addEventListener("click", searchVenues);
+
+function searchVenues() {
+  const locationInput = document.getElementById("location").value;
+const minPrice = parseFloat(document.getElementById("minPrice").value);
+  const maxPrice = parseFloat(document.getElementById("maxPrice").value);
+  const filteredVenues = venues.filter(venue =>
+    venue.location.toLowerCase() === locationInput.toLowerCase() &&
+    (!minPrice || venue.cost >= minPrice) &&
+    (!maxPrice || venue.cost <= maxPrice)
+
+  );
+
+  venueList.innerHTML = "";
+  selectedVenueImage.src = "";
+  selectedVenueName.textContent = "";
+  selectedVenueCost.textContent = "";
+
+  filteredVenues.forEach(venue => {
+    const venueCard = document.createElement("div");
+    venueCard.classList.add("venue-card");
+    venueCard.innerHTML = `<h3>${venue.name}</h3>
+                           <img src="${venue.image}" alt="${venue.name}">
+                           <p>Cost: Rs.${venue.cost}</p>
+                           <a href="${venue.name.toLowerCase().replace(' ', '_')}.html">More Info</a>
+                           <div class="separator"></div>
+                           <div class="separator"></div>
+                           <div class="select-button">
+      <button onclick="selectVenue('${venue.image}', '${venue.Address}', '${venue.name}', ${venue.cost})">
+        Select
+      </button>
+    </div>`
+    venueList.appendChild(venueCard);
+  });
+}
+
+function selectVenue(image, Address, name, cost) {
+  selectedVenueImage.src = image;
+  selectedVenueName.innerHTML = `Name: ${name}`;
+  selectedVenueCost.innerHTML = `Cost: Rs.${cost}`;
+  selectedVenueAddress.innerHTML = `Address: ${Address}`;
+
+  // Store the selected venue information in local storage
+  localStorage.setItem("selectedVenueName", name);
+  localStorage.setItem("selectedVenueCost", cost);
+  localStorage.setItem("selectedVenueAddress", Address);
+}
+
+function clearSelectedVenue() {
+  selectedVenueImage.src = '';
+  selectedVenueName.textContent = '';
+  selectedVenueCost.textContent = '';
+  selectedVenueAddress.textContent = '';
+  selectedVenueDetails.textContent = '';
+}
+const saveVenueBtn = document.getElementById("saveVenueBtn");
+
+   saveVenueBtn.addEventListener("click", () => {
+      //const selectedVenue = selectedVenueName.textContent;
+      //const selectedVenueCost=selectedVenueCost.textContent;
+      //localStorage.setItem("selectedVenue", selectedVenue);
+      //localStorage.setItem("selectedVenueCost",selectedVenueCost);
+      window.location.href = "decor.html"; // Redirect to the decor page
+   });
+// Attach click event listener to the clear button
+clearBtn.addEventListener('click', clearSelectedVenue);
+</script>
+</body>
+</html>
